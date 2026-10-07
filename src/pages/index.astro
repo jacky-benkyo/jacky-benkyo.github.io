@@ -103,7 +103,7 @@ const year = new Date().getFullYear();
         </div>
         <div class="projects">
           {projects.map((p, i) => (
-            <article class={`card project reveal ${p.image ? 'has-img' : ''}`}>
+            <article class:list={['card project reveal', { 'has-img': p.image, wide: p.wide }]}>
               {p.image && <img src={p.image} alt={p.title} loading="lazy" />}
               <div class="p-body">
                 <div class="p-meta mono">
@@ -114,6 +114,11 @@ const year = new Date().getFullYear();
                 <p>{p.summary}</p>
                 {p.highlight && <p class="hl mono">▸ {p.highlight}</p>}
                 <div class="chips">{p.stack.map((s) => <span class="chip muted">{s}</span>)}</div>
+                {p.repo && (
+                  <a class="repo mono" href={p.repo} target="_blank" rel="noopener">
+                    View code on GitHub ↗
+                  </a>
+                )}
               </div>
             </article>
           ))}
@@ -257,12 +262,15 @@ const year = new Date().getFullYear();
   .project { overflow: hidden; display: flex; flex-direction: column; transition: border-color 0.2s, transform 0.2s; }
   .project:hover { border-color: var(--accent); transform: translateY(-3px); }
   .project.has-img { grid-column: span 2; flex-direction: row; }
+  .project.wide { grid-column: span 2; }
   .project img { width: 46%; object-fit: cover; flex: none; }
   .p-body { padding: 24px; display: flex; flex-direction: column; gap: 10px; flex: 1; }
   .p-body p { margin: 0; color: var(--muted); }
   .p-meta { display: flex; justify-content: space-between; gap: 12px; font-size: 12px; color: var(--muted); }
   .p-body .hl { color: var(--signal); font-size: 13px; }
   .p-body .chips { margin-top: auto; padding-top: 8px; }
+  .repo { align-self: flex-start; margin-top: 4px; font-size: 13px; color: var(--accent); text-decoration: none; border-bottom: 1px solid transparent; }
+  .repo:hover { border-bottom-color: var(--accent); }
 
   /* Foundations */
   .found-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; }
@@ -299,7 +307,8 @@ const year = new Date().getFullYear();
     .arm-col { position: static; max-width: 460px; }
     .found-grid { grid-template-columns: 1fr 1fr; }
     .projects { grid-template-columns: 1fr; }
-    .project.has-img { grid-column: auto; flex-direction: column; }
+    .project.has-img, .project.wide { grid-column: auto; }
+    .project.has-img { flex-direction: column; }
     .project img { width: 100%; aspect-ratio: 16 / 10; }
   }
   @media (max-width: 640px) {

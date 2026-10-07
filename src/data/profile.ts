@@ -130,6 +130,8 @@ export type Project = {
   stack: string[];
   image?: string;
   highlight?: string;
+  wide?: boolean;
+  repo?: string;
 };
 
 export const projects: Project[] = [
@@ -141,6 +143,7 @@ export const projects: Project[] = [
       'Developed and simulated trajectory control for a UR5e arm, including motion planning and collision checking, fully containerised for reproducible builds.',
     stack: ['ROS 2 Humble', 'MoveIt 2', 'RViz', 'Docker', 'C++ / Python'],
     highlight: 'Motion planning + collision checking',
+    repo: 'https://github.com/jacky-benkyo/moveit2_ursim',
   },
   {
     title: 'Low-latency IMU Telemetry with micro-ROS',
@@ -150,6 +153,7 @@ export const projects: Project[] = [
       'Streamed GY-801 IMU data from a Raspberry Pi Pico W into the ROS 2 graph using micro-ROS — a small, real sensor-to-robot pipeline.',
     stack: ['micro-ROS', 'Pi Pico W', 'GY-801 IMU', 'C'],
     highlight: 'Sensor → ROS 2 in real time',
+    repo: 'https://github.com/jacky-benkyo/micro_ros_tests_applications',
   },
   {
     title: 'Connectivity Solution for a Medical Robot',
@@ -187,6 +191,7 @@ export const projects: Project[] = [
       'Sized fire-services generator sets for a major cruise terminal: tabulated running and staged starting kVA for firemen’s lifts, drencher and sprinkler pumps and smoke extraction, then selected a 1400 kVA set and planned plant rooms and fuel supply.',
     stack: ['Load analysis', 'FSD requirements', 'Alternator sizing', 'Electrical installation'],
     highlight: '1400 kVA FS gen-set',
+    wide: true,
   },
 ];
 
