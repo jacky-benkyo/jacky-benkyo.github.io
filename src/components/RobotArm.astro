@@ -1,0 +1,67 @@
+---
+// Decorative 3-joint arm. Joints are nested groups so each link follows its parent.
+---
+<div class="arm-box card">
+  <div class="hud mono">
+    <span>MOVEIT2 · PLAN</span>
+    <span class="ok">● EXECUTING</span>
+  </div>
+  <svg viewBox="0 0 400 380" role="img" aria-label="Animated robot arm illustration">
+    <defs>
+      <pattern id="dots" width="20" height="20" patternUnits="userSpaceOnUse">
+        <circle cx="1" cy="1" r="1" class="dotfill" />
+      </pattern>
+    </defs>
+    <rect width="400" height="380" fill="url(#dots)" />
+    <path class="traj" d="M90 120 C 150 40, 290 40, 330 150" />
+    <circle class="target" cx="330" cy="150" r="9" />
+
+    <rect class="plate" x="130" y="336" width="140" height="16" rx="4" />
+    <rect class="base" x="170" y="300" width="60" height="40" rx="6" />
+
+    <g class="j1">
+      <rect class="link" x="186" y="170" width="28" height="138" rx="14" />
+      <circle class="joint" cx="200" cy="300" r="16" />
+      <g class="j2">
+        <rect class="link alt" x="192" y="156" width="124" height="28" rx="14" />
+        <circle class="joint" cx="200" cy="170" r="14" />
+        <g class="j3">
+          <rect class="link" x="296" y="164" width="40" height="12" rx="4" />
+          <path class="grip" d="M336 160 h14 v6 h-8 v10 h8 v6 h-14 z" />
+          <circle class="joint small" cx="306" cy="170" r="10" />
+        </g>
+      </g>
+    </g>
+  </svg>
+  <div class="readout mono">
+    <span>J1 <b>−18.0°↔+12.0°</b></span>
+    <span>J2 <b>+8.0°↔−32.0°</b></span>
+    <span>J3 <b>±20.0°</b></span>
+  </div>
+</div>
+
+<style>
+  .arm-box { padding: 18px; overflow: hidden; position: relative; }
+  .hud, .readout { display: flex; justify-content: space-between; font-size: 11px; color: var(--muted); gap: 8px; flex-wrap: wrap; }
+  .ok { color: var(--signal); }
+  .readout b { color: var(--text); font-weight: 500; }
+  svg { width: 100%; height: auto; display: block; margin: 8px 0; }
+  .dotfill { fill: var(--line-2); }
+  .plate { fill: var(--line-2); }
+  .base { fill: var(--bg-2); stroke: var(--line-2); stroke-width: 2; }
+  .link { fill: var(--accent); }
+  .link.alt { fill: color-mix(in srgb, var(--accent) 80%, var(--text)); }
+  .joint { fill: var(--bg); stroke: var(--signal); stroke-width: 4; }
+  .joint.small { stroke-width: 3; }
+  .grip { fill: var(--text); }
+  .traj { fill: none; stroke: var(--signal); stroke-width: 2; stroke-dasharray: 6 8; opacity: 0.6; animation: dash 3s linear infinite; }
+  .target { fill: none; stroke: var(--signal); stroke-width: 2; opacity: 0.8; }
+  @keyframes dash { to { stroke-dashoffset: -56; } }
+
+  .j1 { transform-origin: 200px 300px; animation: j1 6s ease-in-out infinite; }
+  .j2 { transform-origin: 200px 170px; animation: j2 6s ease-in-out infinite; }
+  .j3 { transform-origin: 306px 170px; animation: j3 6s ease-in-out infinite; }
+  @keyframes j1 { 0%, 100% { transform: rotate(-18deg); } 50% { transform: rotate(12deg); } }
+  @keyframes j2 { 0%, 100% { transform: rotate(8deg); } 50% { transform: rotate(-32deg); } }
+  @keyframes j3 { 0%, 100% { transform: rotate(-20deg); } 50% { transform: rotate(20deg); } }
+</style>

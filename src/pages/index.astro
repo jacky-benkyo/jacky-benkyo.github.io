@@ -1,0 +1,312 @@
+---
+import Base from '../layouts/Base.astro';
+import Nav from '../components/Nav.astro';
+import Hero from '../components/Hero.astro';
+import RobotArm from '../components/RobotArm.astro';
+import {
+  profile, capabilities, experience, projects, foundations,
+  education, certifications, languages,
+} from '../data/profile';
+
+const year = new Date().getFullYear();
+---
+<Base
+  title={`${profile.name} (${profile.nickname}) — Automation & Robotics Engineer`}
+  description="Automation engineer moving into robotics: ROS 2, MoveIt 2, PLC (TIA Portal, TwinCAT 3), Yaskawa robot cells and embedded micro-ROS. Based in Karlsruhe, Germany."
+>
+  <Nav />
+  <main>
+    <Hero />
+
+    <!-- About -->
+    <section id="about" class="section">
+      <div class="wrap about">
+        <div class="section-head reveal">
+          <span class="label">01 / About</span>
+          <h2>From the factory floor to robot autonomy.</h2>
+        </div>
+        <div class="about-body reveal">
+          {profile.summary.map((p) => <p>{p}</p>)}
+          <ol class="path mono">
+            <li><span>2014</span> PLC & HMI · Hong Kong</li>
+            <li><span>2018</span> M.Eng. Automation · Germany</li>
+            <li><span>2020</span> Robot software QA</li>
+            <li><span>2022</span> Medical robot connectivity</li>
+            <li><span>2024</span> Industrial robot cells</li>
+            <li class="now"><span>Next</span> Robotics engineering</li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <!-- Stack -->
+    <section id="stack" class="section">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <span class="label">02 / Stack</span>
+          <h2>Four layers of a working robot system.</h2>
+          <p>Hardware, real-time control, software and the network between them — I’ve shipped work in each.</p>
+        </div>
+        <div class="stack-grid">
+          <div class="arm-col reveal"><RobotArm /></div>
+          <div class="caps">
+            {capabilities.map((c) => (
+              <article class="card cap reveal">
+                <div class="cap-head">
+                  <span class="cap-id mono">{c.id}</span>
+                  <div>
+                    <h3>{c.title}</h3>
+                    <p>{c.blurb}</p>
+                  </div>
+                </div>
+                <div class="chips">{c.items.map((i) => <span class="chip muted">{i}</span>)}</div>
+              </article>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Experience -->
+    <section id="experience" class="section">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <span class="label">03 / Experience</span>
+          <h2>Commissioned, tested, shipped.</h2>
+        </div>
+        <ol class="timeline">
+          {experience.map((job) => (
+            <li class="reveal">
+              <div class="when mono">
+                <span>{job.period}</span>
+                <span class="where">{job.place}</span>
+              </div>
+              <div class="card job">
+                <h3>{job.role}</h3>
+                <p class="company">{job.company}</p>
+                <ul>{job.points.map((p) => <li>{p}</li>)}</ul>
+                <div class="chips">{job.tags.map((t) => <span class="chip">{t}</span>)}</div>
+              </div>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </section>
+
+    <!-- Projects -->
+    <section id="projects" class="section">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <span class="label">04 / Projects</span>
+          <h2>Selected builds — 2015 to now.</h2>
+          <p>Robotics side projects, professional highlights and the electrical-engineering work that started it all.</p>
+        </div>
+        <div class="projects">
+          {projects.map((p, i) => (
+            <article class={`card project reveal ${p.image ? 'has-img' : ''}`}>
+              {p.image && <img src={p.image} alt={p.title} loading="lazy" />}
+              <div class="p-body">
+                <div class="p-meta mono">
+                  <span>{String(i + 1).padStart(2, '0')} · {p.kind}</span>
+                  <span>{p.year}</span>
+                </div>
+                <h3>{p.title}</h3>
+                <p>{p.summary}</p>
+                {p.highlight && <p class="hl mono">▸ {p.highlight}</p>}
+                <div class="chips">{p.stack.map((s) => <span class="chip muted">{s}</span>)}</div>
+              </div>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Foundations -->
+    <section id="foundations" class="section">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <span class="label">05 / Foundations</span>
+          <h2>Electrical engineering underneath the code.</h2>
+          <p>Coursework from my Diploma in Electrical Engineering that still shapes how I design and debug robot systems.</p>
+        </div>
+        <div class="found-grid">
+          {foundations.map((f) => (
+            <div class="found reveal">
+              <h3>{f.title}</h3>
+              <p>{f.detail}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Education -->
+    <section id="education" class="section">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <span class="label">06 / Education & Credentials</span>
+          <h2>Always still learning.</h2>
+        </div>
+        <div class="edu-grid">
+          <div class="edu">
+            {education.map((e) => (
+              <article class="card edu-item reveal">
+                <div class="p-meta mono"><span>{e.period}</span><span>{e.place}</span></div>
+                <h3>{e.degree}</h3>
+                <p class="company">{e.school}</p>
+                <p class="note">{e.note}</p>
+              </article>
+            ))}
+          </div>
+          <aside class="side">
+            <div class="card side-box reveal">
+              <h3 class="label">Certifications</h3>
+              <ul class="certs">
+                {certifications.map((c) => (
+                  <li>
+                    <strong>{c.name}</strong>
+                    <span class="mono">{c.issuer} · {c.date}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div class="card side-box reveal">
+              <h3 class="label">Languages</h3>
+              <ul class="langs">
+                {languages.map((l) => (
+                  <li>
+                    <div class="lang-row"><span>{l.name}</span><span class="mono">{l.level}</span></div>
+                    <div class="bar"><span style={`width:${l.pct}%`}></span></div>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact" class="section contact">
+      <div class="wrap contact-inner reveal">
+        <span class="label">07 / Contact</span>
+        <h2>Building robots? Let’s talk.</h2>
+        <p>I’m looking for robotics engineering roles in Germany and the EU — robot application, ROS 2 integration, or automation for intelligent manufacturing.</p>
+        <div class="cta">
+          <a class="btn primary" href={`mailto:${profile.email}`}>{profile.email}</a>
+          <a class="btn" href={profile.github} target="_blank" rel="noopener">GitHub ↗</a>
+          <a class="btn" href={profile.resume} download>Download CV</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="wrap footer mono">
+    <span>© {year} {profile.name}</span>
+    <span>Built with Astro · {profile.location}</span>
+  </footer>
+
+  <script>
+    const io = new IntersectionObserver(
+      (entries) => entries.forEach((e) => {
+        if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+      }),
+      { threshold: 0.12 },
+    );
+    document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
+  </script>
+</Base>
+
+<style>
+  h3 { margin: 0; font-size: 20px; letter-spacing: -0.01em; line-height: 1.3; }
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; }
+  .company { color: var(--accent); margin: 2px 0 12px; font-weight: 500; }
+
+  /* About */
+  .about { display: grid; grid-template-columns: 0.9fr 1.1fr; gap: 48px; }
+  .about-body p { margin: 0 0 18px; color: var(--muted); font-size: 18px; }
+  .about-body p:first-child { color: var(--text); font-size: 20px; }
+  .path { list-style: none; padding: 0; margin: 28px 0 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; font-size: 13px; }
+  .path li { background: var(--panel); padding: 14px; }
+  .path span { display: block; color: var(--accent); font-size: 12px; }
+  .path .now { background: var(--accent-soft); }
+
+  /* Stack */
+  .stack-grid { display: grid; grid-template-columns: 0.85fr 1.15fr; gap: 24px; align-items: start; }
+  .arm-col { position: sticky; top: 88px; }
+  .caps { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .cap { padding: 22px; display: flex; flex-direction: column; gap: 16px; }
+  .cap-head { display: flex; gap: 14px; }
+  .cap-head p { margin: 2px 0 0; color: var(--muted); font-size: 14px; }
+  .cap-id { flex: none; width: 38px; height: 38px; display: grid; place-items: center; border-radius: 10px; background: var(--accent-soft); color: var(--accent); font-weight: 500; }
+
+  /* Timeline */
+  .timeline { list-style: none; margin: 0; padding: 0; position: relative; }
+  .timeline > li { display: grid; grid-template-columns: 220px 1fr; gap: 32px; padding-bottom: 28px; position: relative; }
+  .timeline > li::before { content: ''; position: absolute; left: 220px; margin-left: 15px; top: 10px; bottom: -10px; width: 1px; background: var(--line-2); }
+  .timeline > li:last-child::before { display: none; }
+  .when { display: flex; flex-direction: column; font-size: 13px; padding-top: 6px; text-align: right; }
+  .when .where { color: var(--muted); }
+  .job { padding: 24px; position: relative; }
+  .job::before { content: ''; position: absolute; left: -22px; top: 14px; width: 11px; height: 11px; border-radius: 50%; background: var(--bg); border: 2px solid var(--accent); }
+  .job ul { margin: 0 0 16px; padding-left: 18px; color: var(--muted); }
+  .job li { margin-bottom: 6px; }
+
+  /* Projects */
+  .projects { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+  .project { overflow: hidden; display: flex; flex-direction: column; transition: border-color 0.2s, transform 0.2s; }
+  .project:hover { border-color: var(--accent); transform: translateY(-3px); }
+  .project.has-img { grid-column: span 2; flex-direction: row; }
+  .project img { width: 46%; object-fit: cover; flex: none; }
+  .p-body { padding: 24px; display: flex; flex-direction: column; gap: 10px; flex: 1; }
+  .p-body p { margin: 0; color: var(--muted); }
+  .p-meta { display: flex; justify-content: space-between; gap: 12px; font-size: 12px; color: var(--muted); }
+  .p-body .hl { color: var(--signal); font-size: 13px; }
+  .p-body .chips { margin-top: auto; padding-top: 8px; }
+
+  /* Foundations */
+  .found-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; }
+  .found { background: var(--bg-2); padding: 26px; }
+  .found h3 { font-size: 17px; margin-bottom: 6px; }
+  .found p { margin: 0; color: var(--muted); font-size: 15px; }
+
+  /* Education */
+  .edu-grid { display: grid; grid-template-columns: 1.3fr 0.7fr; gap: 20px; align-items: start; }
+  .edu { display: grid; gap: 16px; }
+  .edu-item { padding: 22px; }
+  .edu-item h3 { margin-top: 8px; }
+  .note { margin: 0; color: var(--muted); font-size: 15px; }
+  .side { display: grid; gap: 16px; }
+  .side-box { padding: 22px; }
+  .side-box h3 { margin-bottom: 14px; }
+  .certs, .langs { list-style: none; padding: 0; margin: 0; display: grid; gap: 14px; }
+  .certs strong { display: block; font-weight: 600; font-size: 15px; }
+  .certs span { font-size: 12px; color: var(--muted); }
+  .lang-row { display: flex; justify-content: space-between; font-size: 15px; }
+  .lang-row .mono { font-size: 12px; color: var(--muted); }
+  .bar { height: 4px; background: var(--line); border-radius: 4px; margin-top: 6px; overflow: hidden; }
+  .bar span { display: block; height: 100%; background: linear-gradient(90deg, var(--accent), var(--signal)); }
+
+  /* Contact */
+  .contact-inner { text-align: center; max-width: 720px; display: flex; flex-direction: column; align-items: center; gap: 12px; }
+  .contact h2 { font-size: clamp(34px, 5vw, 56px); margin: 0; letter-spacing: -0.03em; line-height: 1.05; }
+  .contact p { color: var(--muted); margin: 0 0 16px; }
+  .cta { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; }
+  .footer { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; padding: 28px 0 40px; border-top: 1px solid var(--line); font-size: 12px; color: var(--muted); }
+
+  @media (max-width: 900px) {
+    .about, .stack-grid, .edu-grid { grid-template-columns: 1fr; }
+    .arm-col { position: static; max-width: 460px; }
+    .found-grid { grid-template-columns: 1fr 1fr; }
+    .projects { grid-template-columns: 1fr; }
+    .project.has-img { grid-column: auto; flex-direction: column; }
+    .project img { width: 100%; aspect-ratio: 16 / 10; }
+  }
+  @media (max-width: 640px) {
+    .caps, .found-grid { grid-template-columns: 1fr; }
+    .path { grid-template-columns: repeat(2, 1fr); }
+    .timeline > li { grid-template-columns: 1fr; gap: 8px; }
+    .timeline > li::before, .job::before { display: none; }
+    .when { text-align: left; flex-direction: row; gap: 10px; flex-wrap: wrap; }
+  }
+</style>
